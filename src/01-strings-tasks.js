@@ -210,8 +210,17 @@ function extractEmails(str) {
  *             '└──────────┘\n'
  *
  */
-function getRectangleString(/* width, height */) {
-  throw new Error('Not implemented');
+function getRectangleString(width, height) {
+  const oneStr = `┌${'─'.repeat(width - 2)}┐\n`;
+  const threeStr = `└${'─'.repeat(width - 2)}┘\n`;
+  let twoStr = '';
+  for (let i = 1; i <= height - 2;) {
+    twoStr += `│${' '.repeat(width - 2)}│\n`;
+    i += 1;
+  }
+
+
+  return oneStr + twoStr + threeStr;
 }
 
 
@@ -231,8 +240,25 @@ function getRectangleString(/* width, height */) {
  *    => 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
  *
  */
-function encodeToRot13(/* str */) {
-  throw new Error('Not implemented');
+function encodeToRot13(str) {
+  const etalon = 'ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz';
+  let result = '';
+
+  for (let j = 0; j < str.length;) {
+    if (etalon.includes(str[j])) {
+      for (let i = 0; i < etalon.length;) {
+        if (str[j] === etalon[i]) {
+          result += etalon[i + 13];
+          break;
+        }
+        i += 1;
+      }
+    } else {
+      result += str[j];
+    }
+    j += 1;
+  }
+  return result;
 }
 
 /**
@@ -248,8 +274,14 @@ function encodeToRot13(/* str */) {
  *   isString('test') => true
  *   isString(new String('test')) => true
  */
-function isString(/* value */) {
-  throw new Error('Not implemented');
+function isString(value) {
+  if (value instanceof String) {
+    return true;
+  }
+  if (typeof (value) === 'string') {
+    return true;
+  }
+  return false;
 }
 
 
@@ -277,8 +309,20 @@ function isString(/* value */) {
  *   'Q♠' => 50
  *   'K♠' => 51
  */
-function getCardId(/* value */) {
-  throw new Error('Not implemented');
+function getCardId(value) {
+  let result = 0;
+  const initialCardArr = [
+    'A♣', '2♣', '3♣', '4♣', '5♣', '6♣', '7♣', '8♣', '9♣', '10♣', 'J♣', 'Q♣', 'K♣',
+    'A♦', '2♦', '3♦', '4♦', '5♦', '6♦', '7♦', '8♦', '9♦', '10♦', 'J♦', 'Q♦', 'K♦',
+    'A♥', '2♥', '3♥', '4♥', '5♥', '6♥', '7♥', '8♥', '9♥', '10♥', 'J♥', 'Q♥', 'K♥',
+    'A♠', '2♠', '3♠', '4♠', '5♠', '6♠', '7♠', '8♠', '9♠', '10♠', 'J♠', 'Q♠', 'K♠'];
+  for (let i = 0; i < initialCardArr.length;) {
+    if (value === initialCardArr[i]) {
+      result = i;
+    }
+    i += 1;
+  }
+  return result;
 }
 
 
